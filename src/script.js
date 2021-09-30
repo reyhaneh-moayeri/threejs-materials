@@ -15,11 +15,21 @@ const texture = textureLoader.load("./textures/matcaps/5.png");
 // material.flatShading = true;
 
 // matcap material
+// const material = new THREE.MeshMatcapMaterial();
 
-const material = new THREE.MeshMatcapMaterial();
+const material = new THREE.MeshLambertMaterial();
 material.side = THREE.DoubleSide;
 material.matcap = texture;
 material.flatShading = true;
+
+// light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff, 0.5);
+pointLight.position.x = 2;
+pointLight.position.y = 3;
+pointLight.position.z = 4;
+scene.add(pointLight);
 // mesh basic material
 // const material = new THREE.MeshBasicMaterial({ map: texture });
 
