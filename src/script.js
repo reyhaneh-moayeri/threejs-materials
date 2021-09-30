@@ -1,6 +1,9 @@
 import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import * as dat from "dat.gui";
+
+const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -36,6 +39,9 @@ const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.55;
 material.side = THREE.DoubleSide;
 material.metalness = 0.25;
+// material.map = gradientTexture;
+gui.add(material, "metalness", -1, 1);
+gui.add(material, "roughness", -1, 1);
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
