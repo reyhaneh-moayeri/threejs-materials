@@ -17,10 +17,12 @@ const texture = textureLoader.load("./textures/matcaps/5.png");
 // matcap material
 // const material = new THREE.MeshMatcapMaterial();
 
-const material = new THREE.MeshLambertMaterial();
+// const material = new THREE.MeshLambertMaterial();
+const material = new THREE.MeshPhongMaterial();
 material.side = THREE.DoubleSide;
-material.matcap = texture;
-material.flatShading = true;
+// material.matcap = texture;
+material.specular = new THREE.Color("red");
+// material.flatShading = true;
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
