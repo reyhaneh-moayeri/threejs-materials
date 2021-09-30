@@ -25,11 +25,17 @@ const gradientTexture = textureLoader.load("./textures/gradients/5.jpg");
 // material.specular = new THREE.Color("red");
 // material.flatShading = true;
 
-const material = new THREE.MeshToonMaterial({ color: "pink" });
+// const material = new THREE.MeshToonMaterial({ color: "pink" });
+// material.side = THREE.DoubleSide;
+// material.gradientMap = gradientTexture;
+// gradientTexture.minFilter = THREE.NearestFilter;
+// gradientTexture.magFilter = THREE.NearestFilter;
+// gradientTexture.generateMipmaps = false;
+
+const material = new THREE.MeshStandardMaterial();
+material.roughness = 0.55;
 material.side = THREE.DoubleSide;
-material.gradientMap = gradientTexture;
-gradientTexture.minFilter = THREE.NearestFilter;
-gradientTexture.magFilter = THREE.NearestFilter;
+material.metalness = 0.25;
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
