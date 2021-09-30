@@ -9,6 +9,7 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load("./textures/matcaps/5.png");
+const gradientTexture = textureLoader.load("./textures/gradients/5.jpg");
 // mesh Normal material
 // const material = new THREE.MeshNormalMaterial();
 // material.side = THREE.DoubleSide;
@@ -18,12 +19,17 @@ const texture = textureLoader.load("./textures/matcaps/5.png");
 // const material = new THREE.MeshMatcapMaterial();
 
 // const material = new THREE.MeshLambertMaterial();
-const material = new THREE.MeshPhongMaterial();
-material.side = THREE.DoubleSide;
+// const material = new THREE.MeshPhongMaterial();
+// material.side = THREE.DoubleSide;
 // material.matcap = texture;
-material.specular = new THREE.Color("red");
+// material.specular = new THREE.Color("red");
 // material.flatShading = true;
 
+const material = new THREE.MeshToonMaterial({ color: "pink" });
+material.side = THREE.DoubleSide;
+material.gradientMap = gradientTexture;
+gradientTexture.minFilter = THREE.NearestFilter;
+gradientTexture.magFilter = THREE.NearestFilter;
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
