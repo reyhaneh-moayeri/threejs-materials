@@ -8,10 +8,17 @@ const canvas = document.querySelector("canvas.webgl");
 // Scene
 const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load("./textures/matcaps/4.png");
+const texture = textureLoader.load("./textures/matcaps/5.png");
 // mesh Normal material
-const material = new THREE.MeshNormalMaterial();
+// const material = new THREE.MeshNormalMaterial();
+// material.side = THREE.DoubleSide;
+// material.flatShading = true;
+
+// matcap material
+
+const material = new THREE.MeshMatcapMaterial();
 material.side = THREE.DoubleSide;
+material.matcap = texture;
 material.flatShading = true;
 // mesh basic material
 // const material = new THREE.MeshBasicMaterial({ map: texture });
