@@ -13,6 +13,10 @@ const scene = new THREE.Scene();
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load("./textures/matcaps/5.png");
 const gradientTexture = textureLoader.load("./textures/gradients/5.jpg");
+const doorColorTexture = textureLoader.load("./textures/door/color.jpg");
+const ambientDoorColorTexture = textureLoader.load(
+  "./textures/door/ambientOcclusion.jpg"
+);
 // mesh Normal material
 // const material = new THREE.MeshNormalMaterial();
 // material.side = THREE.DoubleSide;
@@ -39,9 +43,13 @@ const material = new THREE.MeshStandardMaterial();
 material.roughness = 0.55;
 material.side = THREE.DoubleSide;
 material.metalness = 0.25;
+material.map = doorColorTexture;
+material.aoMap = ambientDoorColorTexture;
+// material.aoMapIntensity = 3;
 // material.map = gradientTexture;
 gui.add(material, "metalness", -1, 1);
 gui.add(material, "roughness", -1, 1);
+gui.add(material, "aoMapIntensity", 0, 10, 0.001);
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
@@ -62,14 +70,26 @@ const sphere = new THREE.Mesh(
   new THREE.SphereBufferGeometry(0.5, 16, 16),
   material
 );
-
+sphere.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+);
 sphere.position.x = -1.5;
 
 const plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), material);
 
+plane.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+);
+
 const torus = new THREE.Mesh(
   new THREE.TorusBufferGeometry(0.3, 0.2, 16, 32),
   material
+);
+torus.geometry.setAttribute(
+  "uv2",
+  new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
 );
 torus.position.x = 1.5;
 scene.add(sphere, plane, torus);
