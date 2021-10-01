@@ -14,6 +14,15 @@ const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load("./textures/matcaps/5.png");
 const gradientTexture = textureLoader.load("./textures/gradients/5.jpg");
 const doorColorTexture = textureLoader.load("./textures/door/color.jpg");
+const doorHeightTexture = textureLoader.load("./textures/door/height.jpg");
+const doorNormalTexture = textureLoader.load("./textures/door/normal.jpg");
+const doorAlphaTexture = textureLoader.load("./textures/door/alpha.jpg");
+const doorMetalnessTexture = textureLoader.load(
+  "./textures/door/metalness.jpg"
+);
+const doorRoughnessTexture = textureLoader.load(
+  "./textures/door/roughness.jpg"
+);
 const ambientDoorColorTexture = textureLoader.load(
   "./textures/door/ambientOcclusion.jpg"
 );
@@ -45,11 +54,21 @@ material.side = THREE.DoubleSide;
 material.metalness = 0.25;
 material.map = doorColorTexture;
 material.aoMap = ambientDoorColorTexture;
-// material.aoMapIntensity = 3;
+material.aoMapIntensity = 1;
+material.displacementMap = doorHeightTexture;
+material.displacementScale = 0.1;
+material.roughnessMap = doorRoughnessTexture;
+material.metalnessMap = doorMetalnessTexture;
+material.normalMap = doorNormalTexture;
+material.normalScale.set(0.5, 0.5);
+material.alphaMap = doorAlphaTexture;
+material.transparent = true;
 // material.map = gradientTexture;
+
 gui.add(material, "metalness", -1, 1);
 gui.add(material, "roughness", -1, 1);
 gui.add(material, "aoMapIntensity", 0, 10, 0.001);
+gui.add(material, "displacementScale", 0, 0.5, 0.001);
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
@@ -67,7 +86,7 @@ scene.add(pointLight);
 // // material.alphaMap = texture;
 // material.side = THREE.DoubleSide;
 const sphere = new THREE.Mesh(
-  new THREE.SphereBufferGeometry(0.5, 16, 16),
+  new THREE.SphereBufferGeometry(0.5, 64, 64),
   material
 );
 sphere.geometry.setAttribute(
@@ -76,7 +95,10 @@ sphere.geometry.setAttribute(
 );
 sphere.position.x = -1.5;
 
-const plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(1, 1), material);
+const plane = new THREE.Mesh(
+  new THREE.PlaneBufferGeometry(1, 1, 100, 100),
+  material
+);
 
 plane.geometry.setAttribute(
   "uv2",
@@ -84,7 +106,7 @@ plane.geometry.setAttribute(
 );
 
 const torus = new THREE.Mesh(
-  new THREE.TorusBufferGeometry(0.3, 0.2, 16, 32),
+  new THREE.TorusBufferGeometry(0.3, 0.2, 64, 128),
   material
 );
 torus.geometry.setAttribute(
